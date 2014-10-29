@@ -1,12 +1,9 @@
-package redis
+package main
 
 import (
     "fmt"
-	"testing"
-	"time"
-	. "github.com/garyburd/redigo/redis"
+    . "github.com/youngking/go-redisd"
 )
-
 type MyHandler struct {
 	values map[string][]byte
 }
@@ -24,16 +21,10 @@ func (h *MyHandler) SET(key string, value []byte, expire int) error {
 }
 
 
-func TestServer(t *testing.T) {
+func main() {
     srv, err := NewServer(":6389", &MyHandler{values: make(map[string][]byte)})
-	if err != nil {
-		panic(err)
-	}
-	go srv.ListenAndServe()
-	time.Sleep(100 * time.Millisecond)
-    c, _ := Dial("tcp", ":6389")
-    defer c.Close()
-    c.Do("SET", "hello", "world", 110)
-    n, _ := c.Do("GET", "hello")
-    fmt.Printf("GET value: %v \n", n)
+    if err != nil {
+        panic(err)
+    }
+    srv.ListenAndServe()
 }

@@ -3,7 +3,13 @@ A go library help you build server which speack the redis protocol. Forked from 
 
 ## Usage
 
-```go	
+```go
+package main
+
+import  (
+    . "github.com/youngking/go-redisd"
+)
+    
 type MyHandler struct {
 	values map[string][]byte
 }
@@ -18,10 +24,11 @@ func (h *MyHandler) SET(key string, value []byte) error {
      return nil
 }
 
-
-srv, err := NewServer(":6389", &MyHandler{})
-if err != nil {
-	panic(err)
+func main() {
+    srv, err := NewServer(":6389", &MyHandler{values: make(map[string][]byte)})
+    if err != nil {
+        panic(err)
+    }
+    srv.ListenAndServe()
 }
-srv.ListenAndServe()
 ```
