@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strconv"
 	. "github.com/youngking/go-redisd"
 )
 
@@ -14,9 +15,13 @@ func (h *MyHandler) GET(key string) ([]byte, error) {
 	return v, nil
 }
 
-func (h *MyHandler) SET(key string, value []byte, expire int) error {
+func (h *MyHandler) SET(key string, value []byte, expire string) error {
+    ts, err := strconv.Atoi(expire)
+    if err != nil {
+        return err
+    }
+	fmt.Printf("expire in: %d \n", ts)
 	fmt.Printf("SET value: %v \n", value)
-	fmt.Printf("expire in: %d \n", expire)
 	h.values[key] = value
 	return nil
 }
