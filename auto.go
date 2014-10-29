@@ -6,13 +6,11 @@ import (
 	"reflect"
 )
 
-
 type (
-	HashValue   map[string][]byte
-	HashHash    map[string]HashValue
-	HashSub     map[string][]*ChannelWriter
+	HashValue map[string][]byte
+	HashHash  map[string]HashValue
+	HashSub   map[string][]*ChannelWriter
 )
-
 
 type CheckerFn func(request *Request) (reflect.Value, ReplyWriter)
 

@@ -1,12 +1,10 @@
 package redis
 
 import (
-    "strings"
+	"strings"
 )
 
-
 type HandlerFn func(r *Request) (ReplyWriter, error)
-
 
 func (srv *Server) Apply(r *Request) (ReplyWriter, error) {
 	if srv == nil || srv.methods == nil {
@@ -19,7 +17,6 @@ func (srv *Server) Apply(r *Request) (ReplyWriter, error) {
 	}
 	return fn(r)
 }
-
 
 func (srv *Server) Register(name string, fn HandlerFn) {
 	if srv.methods == nil {

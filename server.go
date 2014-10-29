@@ -13,8 +13,8 @@ import (
 )
 
 type Server struct {
-	Addr         string // TCP address to listen on, ":6389" if empty
-	methods      map[string]HandlerFn
+	Addr    string // TCP address to listen on, ":6389" if empty
+	methods map[string]HandlerFn
 }
 
 func (srv *Server) ListenAndServe() error {
