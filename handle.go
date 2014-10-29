@@ -1,6 +1,7 @@
 package redis
 
 import (
+	"reflect"
 	"strings"
 )
 
@@ -26,4 +27,15 @@ func (srv *Server) Register(name string, fn HandlerFn) {
 		Debugf("REGISTER: %s", strings.ToLower(name))
 		srv.methods[strings.ToLower(name)] = fn
 	}
+}
+
+
+func (srv *Server) RegisterFct(key string, f interface{}) error {
+	v := reflect.ValueOf(f)
+	handlerFn, err := srv.createHandlerFn(f, &v)
+	if err != nil {
+		return err
+	}
+	srv.Register(key, handlerFn)
+	return nil
 }
