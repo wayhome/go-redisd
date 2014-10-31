@@ -29,7 +29,6 @@ func (srv *Server) Register(name string, fn HandlerFn) {
 	}
 }
 
-
 func (srv *Server) RegisterFct(key string, f interface{}) error {
 	v := reflect.ValueOf(f)
 	handlerFn, err := srv.createHandlerFn(f, &v)

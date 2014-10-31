@@ -10,6 +10,7 @@ import (
 	"io/ioutil"
 	"net"
 	"reflect"
+	"strings"
 )
 
 type Server struct {
@@ -19,10 +20,15 @@ type Server struct {
 
 func (srv *Server) ListenAndServe() error {
 	addr := srv.Addr
+	proto := "tcp"
 	if addr == "" {
 		addr = ":6389"
 	}
-	l, e := net.Listen("tcp", addr)
+	if strings.HasPrefix(addr, "unix:") {
+		proto = "unix"
+		addr = strings.Split(addr, "//")[1]
+	}
+	l, e := net.Listen(proto, addr)
 	if e != nil {
 		return e
 	}

@@ -25,7 +25,7 @@ func (h *MyHandler) SET(key string, value []byte) error {
 }
 
 func main() {
-    srv, err := NewServer(":6389", &MyHandler{values: make(map[string][]byte)})
+    srv, err := NewServer(":6389", &MyHandler{values: make(map[string][]byte)}) // And you can also use the unix socket as address, such as ``unix:///tmp/redis.sock``
     if err != nil {
         panic(err)
     }

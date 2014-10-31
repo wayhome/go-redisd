@@ -2,10 +2,10 @@ package redis
 
 import (
 	"fmt"
+	. "github.com/garyburd/redigo/redis"
 	"strconv"
 	"testing"
 	"time"
-	. "github.com/garyburd/redigo/redis"
 )
 
 type MyHandler struct {
@@ -18,10 +18,10 @@ func (h *MyHandler) GET(key string) ([]byte, error) {
 }
 
 func (h *MyHandler) SET(key string, value []byte, expire string) error {
-    ts, err := strconv.Atoi(expire)
-    if err != nil {
-        return err
-    }
+	ts, err := strconv.Atoi(expire)
+	if err != nil {
+		return err
+	}
 	fmt.Printf("SET value: %v \n", value)
 	fmt.Printf("expire in: %d \n", ts)
 	h.values[key] = value

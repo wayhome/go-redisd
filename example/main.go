@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"strconv"
 	. "github.com/youngking/go-redisd"
+	"strconv"
 )
 
 type MyHandler struct {
@@ -16,10 +16,10 @@ func (h *MyHandler) GET(key string) ([]byte, error) {
 }
 
 func (h *MyHandler) SET(key string, value []byte, expire string) error {
-    ts, err := strconv.Atoi(expire)
-    if err != nil {
-        return err
-    }
+	ts, err := strconv.Atoi(expire)
+	if err != nil {
+		return err
+	}
 	fmt.Printf("expire in: %d \n", ts)
 	fmt.Printf("SET value: %v \n", value)
 	h.values[key] = value
@@ -27,7 +27,7 @@ func (h *MyHandler) SET(key string, value []byte, expire string) error {
 }
 
 func main() {
-	srv, err := NewServer(":6389", &MyHandler{values: make(map[string][]byte)})
+	srv, err := NewServer("unix:///tmp/redis.sock", &MyHandler{values: make(map[string][]byte)})
 	if err != nil {
 		panic(err)
 	}
