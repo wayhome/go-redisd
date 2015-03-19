@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"strings"
 )
 
@@ -77,7 +76,8 @@ func readArgument(r *bufio.Reader) ([]byte, error) {
 
 	// I think int is safe here as the max length of request
 	// should be less then max int value?
-	data, err := ioutil.ReadAll(io.LimitReader(r, int64(argSize)))
+	data := make([]byte, argSize)
+	_, err = r.Read(data)
 	if err != nil {
 		return nil, err
 	}
